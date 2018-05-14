@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="_SingleMoleculeAnalysis">
+    <output-path>C:/Fiji/Fiji2/plugins</output-path>
+    <root id="archive" name="_SingleMoleculeAnalysis.jar">
+      <element id="module-output" name="SingleMoleculeAnalysis" />
+    </root>
+  </artifact>
+</component>
