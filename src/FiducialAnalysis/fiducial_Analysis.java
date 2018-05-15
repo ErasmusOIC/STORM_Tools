@@ -1,7 +1,5 @@
-package DriftCorrection;
+package FiducialAnalysis;
 
-import FiducialAnalysis.localisationList;
-import FiducialAnalysis.trackList;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
