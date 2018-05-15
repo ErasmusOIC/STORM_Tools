@@ -63,10 +63,16 @@ public class fiducial_Analysis implements PlugIn {
         imp = track.addBeads(imp);
 
         int[] trackIDs = track.getTrackLocs(track.getFilteredIDs()[0]);
+        localisation[] trackNumbers = locList.getLocList();
 
         for(int i=0;i<trackIDs.length;i++){
-            IJ.log(trackIDs[i]+" ");
+            IJ.log(trackIDs[i]+" "+trackNumbers[trackIDs[i]].getTrackID() +" "+ trackNumbers[trackIDs[i]].getX() );
+
         }
+
+
+
+
 
 
         imp.show();
