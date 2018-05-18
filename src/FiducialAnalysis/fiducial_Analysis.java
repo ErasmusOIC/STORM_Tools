@@ -71,10 +71,6 @@ public class fiducial_Analysis implements PlugIn {
         }
 
 
-
-
-
-
         imp.show();
 
 
