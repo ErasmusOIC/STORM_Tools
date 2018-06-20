@@ -2,6 +2,7 @@ package Channel_alignment;
 
 import ij.IJ;
 import ij.Prefs;
+import ij.gui.GenericDialog;
 import ij.io.SaveDialog;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Channel_alignment implements PlugIn
@@ -21,10 +23,14 @@ Part of the class is reused: bead selection and filtering, b-spline alignment an
 localization data set.
 */
     double [][] xyref;
+    double [][] xyref_all;
+
     double [][] xystat;
     double [][] xymov;
     double [] SNRref, fref;
     double [][] xywarp;
+    double [][] xywarp_all;
+
     double [] SNRwarp, fwarp;
     /** Shift between channels in pixels */
     double [] dXYShift;
@@ -54,7 +60,20 @@ localization data set.
 
     @Override
     public void run(String arg) {
-               //output calibration to IJ.Log
+        //Ask for channels to transform
+        GenericDialog gd = new GenericDialog("Select input parameters");
+        gd.addNumericField("Select reference channel", 1.0,0);
+        gd.addNumericField("Select transformation channel", 2.0,0);
+
+        gd.showDialog();
+
+        if(gd.wasCanceled()){
+            return;
+        }
+
+        int ref_ch = (int)gd.getNextNumber();
+        int warp_ch = (int)gd.getNextNumber();
+
 
         //maximal distance between beads in channels
         dCCDist = 4; // in pixels
@@ -77,16 +96,28 @@ localization data set.
         //read xy coordinates from results table
         int rtlength = rt.size();
 
-        xyref = new double [2][rtlength];
+        xyref_all = new double [2][rtlength];
+        xywarp_all = new double [2][rtlength];
+        int nref = 0;
+        int nwarp = 0;
+
         for(int j=0;j<rtlength;j++){
-            xyref[0][j]=rt.getValueAsDouble(0,j)/dPxtoNm;
-            xyref[1][j]=rt.getValueAsDouble(1,j)/dPxtoNm;
+            if (rt.getValueAsDouble(2,j)==ref_ch) {
+                xyref_all[0][nref] = rt.getValueAsDouble(0,j)/dPxtoNm;
+                xyref_all[1][nref] = rt.getValueAsDouble(1,j)/dPxtoNm;
+                nref ++;
+            } else if (rt.getValueAsDouble(2,j)==warp_ch) {
+                xywarp_all[0][nwarp] = rt.getValueAsDouble(0,j)/dPxtoNm;
+                xywarp_all[1][nwarp] = rt.getValueAsDouble(1,j)/dPxtoNm;
+                nwarp ++;
+            }
         }
-        xywarp = new double [2][rtlength];
-        for(int j=0;j<rtlength;j++){
-            xywarp[0][j]=rt.getValueAsDouble(2,j)/dPxtoNm;
-            xywarp[1][j]=rt.getValueAsDouble(3,j)/dPxtoNm;
-        }
+        xyref = new double [2][nref+1];
+        xywarp = new double [2][nwarp+1];
+        xyref[0] = Arrays.copyOfRange(xyref_all[0],0,nref);
+        xyref[1] = Arrays.copyOfRange(xyref_all[1],0,nref);
+        xywarp[0] = Arrays.copyOfRange(xywarp_all[0],0,nref);
+        xywarp[1] = Arrays.copyOfRange(xywarp_all[1],0,nref);
 
         IJ.log(String.valueOf(CCfindParticles()));
 
