@@ -10,11 +10,15 @@ import ij.plugin.filter.Analyzer;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 
+
 public class fiducial_Analysis implements PlugIn {
 
     public void run(String arg){
         ResultsTable rt = Analyzer.getResultsTable();
         int gap = 50;
+
+
+
 
         if(rt==null){
             IJ.showMessage("No Results table is open");
@@ -61,7 +65,7 @@ public class fiducial_Analysis implements PlugIn {
 
 
         imp = track.addBeads(imp);
-
+        /*
         int[] trackIDs = track.getTrackLocs(track.getFilteredIDs()[0]);
         localisation[] trackNumbers = locList.getLocList();
 
@@ -69,15 +73,29 @@ public class fiducial_Analysis implements PlugIn {
             IJ.log(trackIDs[i]+" "+trackNumbers[trackIDs[i]].getTrackID() +" "+ trackNumbers[trackIDs[i]].getX() );
 
         }
+        */
 
 
         imp.show();
 
 
+        double[] xs = track.getFilteredmeanXs();
+        double[] ys = track.getFilteredmeanYs();
+
+        rt = new ResultsTable();
+
+        for(int i=0;i<xs.length;i++){
 
 
+            rt.incrementCounter();
+            rt.addValue("X",xs[i]);
+            rt.addValue("Y",ys[i]);
 
-        rt = locList.makeResultTable();
+
+        }
+
+
+        //rt = locList.makeResultTable();
         rt.show("Results");
 
         IJ.log("finished");
