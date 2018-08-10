@@ -17,9 +17,9 @@ public class MultiChBeadSelection_ implements PlugIn {
 
         //load two files
 
-        OpenDialog od  =  new OpenDialog("Select Primary Data");
+        OpenDialog od  =  new OpenDialog("Select_Primary Data");
         primary = od.getPath();
-        od = new OpenDialog("Select Secondary Data");
+        od = new OpenDialog("Select_Secondary Data");
         secondary = od.getPath();
 
 
@@ -58,24 +58,21 @@ public class MultiChBeadSelection_ implements PlugIn {
         Analyzer.setResultsTable(rt);
 
         int max;
+        max = primary_xy[0].length+secondary_xy[0].length;
 
-       if(primary_xy[0].length>=secondary_xy[0].length){
-           max = primary_xy[0].length;
-        }else{
-           max = secondary_xy[0].length;
-       }
 
         for(int i=0;i<max;i++){
             rt.incrementCounter();
             if(i<primary_xy[0].length) {
                 rt.addValue("X1", primary_xy[0][i]);
                 rt.addValue("Y1", primary_xy[1][i]);
+                rt.addValue("Channel", 1);
                 rt.addValue("L1", primary_xy[2][i]);
-            }
-            if(i<secondary_xy[0].length) {
-                rt.addValue("X2", secondary_xy[0][i]);
-                rt.addValue("Y2", secondary_xy[1][i]);
-                rt.addValue("L2", secondary_xy[2][i]);
+            } else {
+                rt.addValue("X1", secondary_xy[0][i - primary_xy[0].length]);
+                rt.addValue("Y1", secondary_xy[1][i - primary_xy[0].length]);
+                rt.addValue("Channel", 2);
+                rt.addValue("L1", secondary_xy[2][i - primary_xy[0].length]);
             }
         }
 
