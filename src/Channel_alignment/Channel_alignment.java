@@ -60,23 +60,10 @@ localization data set.
 
     @Override
     public void run(String arg) {
-        //Ask for channels to transform
-        GenericDialog gd = new GenericDialog("Select input parameters");
-        gd.addNumericField("Select reference channel", 1.0,0);
-        gd.addNumericField("Select transformation channel", 2.0,0);
-
-        gd.showDialog();
-
-        if(gd.wasCanceled()){
-            return;
-        }
-
-        int ref_ch = (int)gd.getNextNumber();
-        int warp_ch = (int)gd.getNextNumber();
 
 
         //maximal distance between beads in channels
-        dCCDist = 4; // in pixels
+        dCCDist = 6; // in pixels
         dMheight = 512;
         dMwidth = 512;
         dPxtoNm = 100.0;
@@ -92,6 +79,19 @@ localization data set.
             IJ.log("No Results table is open");
             return;
         }
+        //Ask for channels to transform
+        GenericDialog gd = new GenericDialog("Select input parameters");
+        gd.addNumericField("Select reference channel", 1.0,0);
+        gd.addNumericField("Select transformation channel", 2.0,0);
+
+        gd.showDialog();
+
+        if(gd.wasCanceled()){
+            return;
+        }
+
+        int ref_ch = (int)gd.getNextNumber();
+        int warp_ch = (int)gd.getNextNumber();
 
         //read xy coordinates from results table
         int rtlength = rt.size();

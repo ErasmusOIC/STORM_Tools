@@ -19,14 +19,17 @@ public class MultiChBeadSelection_ implements PlugIn {
 
         //establish bead parameters
 
-        GenericDialog gd = new GenericDialog("Fiducial Parameters");
-        gd.addNumericField("Maximum gap size",(double)gap,0);
-        gd.addNumericField("Track length (percentage of max)",minOn,0);
+        GenericDialog gd = new GenericDialog("Fiducial_Parameters");
+        gd.addNumericField("Maximum_gap size",(double)gap,0);
+        gd.addNumericField("Track_length (percentage of max)",minOn,0);
         gd.showDialog();
 
         if(gd.wasCanceled()){
             return;
         }
+
+        gap = (int) gd.getNextNumber();
+        minOn = (int) gd.getNextNumber();
 
         //load two files
 
