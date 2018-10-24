@@ -3,6 +3,7 @@ package FiducialAnalysis;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
+import ij.gui.GenericDialog;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
@@ -15,7 +16,22 @@ public class fiducial_Analysis implements PlugIn {
 
     public void run(String arg){
         ResultsTable rt = Analyzer.getResultsTable();
-        int gap = 50;
+        int gap =50;
+        double minOn = 50;
+
+        //establish bead parameters
+
+        GenericDialog gd = new GenericDialog("Fiducial_Parameters");
+        gd.addNumericField("Maximum_gap size",(double)gap,0);
+        gd.addNumericField("Track_length (percentage of max)",minOn,0);
+        gd.showDialog();
+
+        if(gd.wasCanceled()){
+            return;
+        }
+
+        gap = (int) gd.getNextNumber();
+        minOn = (int) gd.getNextNumber();
 
 
 
@@ -33,7 +49,7 @@ public class fiducial_Analysis implements PlugIn {
 
         int frames = locList.getMaxF();
 
-        locList.getTracks().FilterIds((int)(frames*0.5));
+        locList.getTracks().FilterIds((int)(frames*(minOn/100)));
 
         trackList track = locList.getTracks();
         int[] ids = track.getFilteredIDs();
