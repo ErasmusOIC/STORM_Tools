@@ -116,14 +116,15 @@ localization data set.
         xywarp = new double [2][nwarp+1];
         xyref[0] = Arrays.copyOfRange(xyref_all[0],0,nref);
         xyref[1] = Arrays.copyOfRange(xyref_all[1],0,nref);
-        xywarp[0] = Arrays.copyOfRange(xywarp_all[0],0,nref);
-        xywarp[1] = Arrays.copyOfRange(xywarp_all[1],0,nref);
+        xywarp[0] = Arrays.copyOfRange(xywarp_all[0],0,nwarp);
+        xywarp[1] = Arrays.copyOfRange(xywarp_all[1],0,nwarp);
 
-        IJ.log(String.valueOf(CCfindParticles()));
+        int foundParticles = (int) CCfindParticles();
 
-        if(CCfindParticles()<3)
+        if(foundParticles<3)
         {
-            IJ.error("Less than 3 particles are found in both channels. Try to increase distance or lower SNR threshold.");
+            IJ.error("Less than 3 particles are found in both channels. Try to increase distance");
+            IJ.log("WARNING not enough beads found only: "+ foundParticles);
             return;
         }
         IJ.log("In total "+Integer.toString(nColocPatN)+" particles found.");
