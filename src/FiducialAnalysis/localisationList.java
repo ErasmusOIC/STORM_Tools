@@ -55,11 +55,11 @@ public class localisationList {
         headers[headers_temp.length] = "none";
 
         GenericDialog gd = new GenericDialog("select column names");
-        gd.addChoice("select x", headers,headers[0]);
-        gd.addChoice("select y", headers,headers[0]);
-        gd.addChoice("select z*", headers,headers[0]);
-        gd.addChoice("select Frame Number", headers,headers[0]);
-        gd.addChoice("select Precision", headers,headers[0]);
+        gd.addChoice("select_x", headers,headers[0]);
+        gd.addChoice("select_y", headers,headers[0]);
+        gd.addChoice("select_z *", headers,headers[0]);
+        gd.addChoice("select_Frame Number", headers,headers[0]);
+        gd.addChoice("select_Precision", headers,headers[0]);
         gd.addMessage("* select none for 2D localisations");
         gd.showDialog();
 
@@ -70,7 +70,7 @@ public class localisationList {
         String xlabel = gd.getNextChoice();
         String ylabel = gd.getNextChoice();
         String zlabel = gd.getNextChoice();
-        String framelabel = gd. getNextChoice();
+        String framelabel = gd.getNextChoice();
         String preclabel = gd.getNextChoice();
 
         locList = new localisation[rt.size()];
@@ -80,7 +80,8 @@ public class localisationList {
              double x = rt.getValue(xlabel,i);
              double y = rt.getValue(ylabel,i);
              double z;
-             if(zlabel!="none") {
+
+             if(!zlabel.equals("none")) {
                  z = rt.getValue(zlabel, i);
              }else{
                  z = 0.0;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Channel_alignment implements PlugIn
+public class Channel_alignment_TS implements PlugIn
 {
 /* This code is adapted from the DoM_Utrecht plugin for single-molecule analysis
 https://github.com/ekatrukha/DoM_Utrecht/blob/master/src/DOM/ColorCorrection.java
@@ -116,15 +116,14 @@ localization data set.
         xywarp = new double [2][nwarp+1];
         xyref[0] = Arrays.copyOfRange(xyref_all[0],0,nref);
         xyref[1] = Arrays.copyOfRange(xyref_all[1],0,nref);
-        xywarp[0] = Arrays.copyOfRange(xywarp_all[0],0,nwarp);
-        xywarp[1] = Arrays.copyOfRange(xywarp_all[1],0,nwarp);
+        xywarp[0] = Arrays.copyOfRange(xywarp_all[0],0,nref);
+        xywarp[1] = Arrays.copyOfRange(xywarp_all[1],0,nref);
 
-        int foundParticles = (int) CCfindParticles();
+        IJ.log(String.valueOf(CCfindParticles()));
 
-        if(foundParticles<3)
+        if(CCfindParticles()<3)
         {
-            IJ.error("Less than 3 particles are found in both channels. Try to increase distance");
-            IJ.log("WARNING not enough beads found only: "+ foundParticles);
+            IJ.error("Less than 3 particles are found in both channels. Try to increase distance or lower SNR threshold.");
             return;
         }
         IJ.log("In total "+Integer.toString(nColocPatN)+" particles found.");
@@ -1002,8 +1001,8 @@ localization data set.
         fref = rt.getColumnAsDoubles(1);
         nPatN=fref.length;
         xyref = new double [2][nPatN];
-        xyref[0] = rt.getColumnAsDoubles(4);
-        xyref[1] = rt.getColumnAsDoubles(5);
+        xyref[0] = rt.getColumnAsDoubles(1);
+        xyref[1] = rt.getColumnAsDoubles(2);
         IJ.log(Double.toString(xyref[0][1])+" "+Double.toString(xyref[1][1]));
         for(i=0;i<nPatN;i++)
         {
@@ -1029,8 +1028,8 @@ localization data set.
 
         for(i=0;i<nPatN;i++)
         {
-            rt.setValue(4, i, xyref[0][i]*dPxtoNmTable);
-            rt.setValue(5, i, xyref[1][i]*dPxtoNmTable);
+            rt.setValue(1, i, xyref[0][i]*dPxtoNmTable);
+            rt.setValue(2, i, xyref[1][i]*dPxtoNmTable);
 
         }
         //sml.ptable_lock.unlock();
