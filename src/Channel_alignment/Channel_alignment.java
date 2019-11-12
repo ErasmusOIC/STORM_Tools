@@ -962,7 +962,6 @@ localization data set.
         Prefs.set("SiMoLOc.CC_dXYShift0",Double.parseDouble(sCalSplittedVals[1]));
         sCalSplittedVals =sCalSplittedRows[9].split(delimst);
         Prefs.set("SiMoLOc.CC_dXYShift1",Double.parseDouble(sCalSplittedVals[1]));
-        ColocCal_getCalibration();
         for(h=0;h<2;h++)
         {
 
@@ -977,6 +976,8 @@ localization data set.
             }
 
         }
+        ColocCal_getCalibration();
+
         /*if (sml.ptable.getCounter()==0 || !sml.ptable.getHeadings()[0].equals("X_(px)"))
         {
             IJ.error("Not able to detect a valid 'Particles Table' for reconstruction, please load one.");
@@ -1004,21 +1005,17 @@ localization data set.
         xyref = new double [2][nPatN];
         xyref[0] = rt.getColumnAsDoubles(4);
         xyref[1] = rt.getColumnAsDoubles(5);
-        IJ.log(Double.toString(xyref[0][1])+" "+Double.toString(xyref[1][1]));
         for(i=0;i<nPatN;i++)
         {
             xyref[0][i] = xyref[0][i]/dPxtoNmTable;
             xyref[1][i] = xyref[1][i]/dPxtoNmTable;
         }
-        IJ.log(Double.toString(xyref[0][1])+" "+Double.toString(xyref[1][1]));
-
         //apply shift
         for(i=0;i<nPatN;i++)
         {
             xyref[0][i] +=dXYShift[0];
             xyref[1][i] +=dXYShift[1];
         }
-        IJ.log(Double.toString(xyref[0][1])+" "+Double.toString(xyref[1][1]));
 
         //apply b-spline transform
         xyref = bspline_transform_slow_2d(O_trans, Spacing, xyref);
