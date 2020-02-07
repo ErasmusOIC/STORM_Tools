@@ -8,13 +8,15 @@ public class localisation {
     double precision;
     int trackID=0;
     int trackLength=0;
+    int numFrames=0;
 
-    public localisation(double x_,double y_, double z_, int timeFrame_, double precision_){
+    public localisation(double x_,double y_, double z_, int timeFrame_, double precision_, int numFrames_){
         x = x_;
         y = y_;
         z = z_;
         timeFrame = timeFrame_;
         precision = precision_;
+        numFrames = numFrames_;
     }
 
     public double getPrecision() {
@@ -36,6 +38,8 @@ public class localisation {
     public double getZ() {
         return z;
     }
+
+    public int getNumFrames(){ return numFrames;}
 
     public int getTrackID() {
         return trackID;

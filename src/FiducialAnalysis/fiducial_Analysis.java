@@ -18,12 +18,14 @@ public class fiducial_Analysis implements PlugIn {
         ResultsTable rt = Analyzer.getResultsTable();
         int gap =50;
         double minOn = 50;
+        int factor = 2;
 
         //establish bead parameters
 
         GenericDialog gd = new GenericDialog("Fiducial_Parameters");
         gd.addNumericField("Maximum_gap size",(double)gap,0);
         gd.addNumericField("Track_length (percentage of max)",minOn,0);
+        gd.addNumericField("Search Factor",factor,0);
         gd.showDialog();
 
         if(gd.wasCanceled()){
@@ -32,6 +34,7 @@ public class fiducial_Analysis implements PlugIn {
 
         gap = (int) gd.getNextNumber();
         minOn = (int) gd.getNextNumber();
+        factor = (int) gd.getNextNumber();
 
 
 
@@ -44,10 +47,12 @@ public class fiducial_Analysis implements PlugIn {
         localisationList locList = new localisationList(rt);
         IJ.log("localisation loaded");
 
-        locList.assignTracks(gap);
+        locList.assignTracks(gap,factor);
         IJ.log("tracks assigned");
 
         int frames = locList.getMaxF();
+
+        IJ.log("aantal frames "+frames);
 
         locList.getTracks().FilterIds((int)(frames*(minOn/100)));
 

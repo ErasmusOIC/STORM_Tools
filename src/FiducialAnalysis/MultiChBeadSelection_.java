@@ -16,12 +16,14 @@ public class MultiChBeadSelection_ implements PlugIn {
         double[][] secondary_xy = new double[3][];
         int gap =50;
         double minOn = 50;
+        int factor = 2;
 
         //establish bead parameters
 
         GenericDialog gd = new GenericDialog("Fiducial_Parameters");
         gd.addNumericField("Maximum_gap size",(double)gap,0);
         gd.addNumericField("Track_length (percentage of max)",minOn,0);
+        gd.addNumericField("Search Factor",factor,0);
         gd.showDialog();
 
         if(gd.wasCanceled()){
@@ -30,6 +32,7 @@ public class MultiChBeadSelection_ implements PlugIn {
 
         gap = (int) gd.getNextNumber();
         minOn = (int) gd.getNextNumber();
+        factor = (int) gd.getNextNumber();
 
         //load two files
 
@@ -53,8 +56,8 @@ public class MultiChBeadSelection_ implements PlugIn {
         localisationList primary_loc = new localisationList(primary_rt);
         localisationList secondary_loc = new localisationList(secondary_rt);
 
-        primary_loc.assignTracks(gap);
-        secondary_loc.assignTracks(gap);
+        primary_loc.assignTracks(gap,factor);
+        secondary_loc.assignTracks(gap,factor);
 
         trackList primary_tracks = primary_loc.getTracks();
         trackList secondary_tracks = secondary_loc.getTracks();

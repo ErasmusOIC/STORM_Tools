@@ -2,6 +2,7 @@ package FiducialAnalysis;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.Prefs;
 import ij.gui.GenericDialog;
 import ij.measure.ResultsTable;
 import ij.process.ByteProcessor;
@@ -55,11 +56,12 @@ public class localisationList {
         headers[headers_temp.length] = "none";
 
         GenericDialog gd = new GenericDialog("select column names");
-        gd.addChoice("select_x", headers,headers[0]);
-        gd.addChoice("select_y", headers,headers[0]);
-        gd.addChoice("select_z *", headers,headers[0]);
-        gd.addChoice("select_Frame Number", headers,headers[0]);
-        gd.addChoice("select_Precision", headers,headers[0]);
+        gd.addChoice("select_x", headers,headers[(int)Prefs.get("LOC.xlab",4)]);
+        gd.addChoice("select_y", headers,headers[(int)Prefs.get("LOC.ylab",5)]);
+        gd.addChoice("select_z *", headers,headers[(int)Prefs.get("LOC.zlab",headers_temp.length)]);
+        gd.addChoice("select_Frame Number", headers,headers[(int)Prefs.get("LOC.flab",1)]);
+        gd.addChoice("select_Precision", headers,headers[(int)Prefs.get("LOC.plab",6)]);
+        gd.addChoice("select Number Frames",headers,headers[(int)Prefs.get("LOC.fnlab",2)]);
         gd.addMessage("* select none for 2D localisations");
         gd.showDialog();
 
@@ -68,10 +70,26 @@ public class localisationList {
         }
 
         String xlabel = gd.getNextChoice();
+        int xlabelIndex = gd.getNextChoiceIndex();
         String ylabel = gd.getNextChoice();
+        int ylabelIndex = gd.getNextChoiceIndex();
         String zlabel = gd.getNextChoice();
+        int zlabelIndex = gd.getNextChoiceIndex();
         String framelabel = gd.getNextChoice();
+        int framelabelIndex = gd.getNextChoiceIndex();
         String preclabel = gd.getNextChoice();
+        int preclabelIndex = gd.getNextChoiceIndex();
+        String framenumlabel = gd.getNextChoice();
+        int framenumlabelIndex = gd.getNextChoiceIndex();
+
+
+        Prefs.set("LOC.xlab",xlabelIndex);
+        Prefs.set("LOC.ylab",ylabelIndex);
+        Prefs.set("LOC.zlab",zlabelIndex);
+        Prefs.set("LOC.flab",framelabelIndex);
+        Prefs.set("LOC.plab",preclabelIndex);
+        Prefs.set("LOC.fnlab",framenumlabelIndex);
+
 
         locList = new localisation[rt.size()];
 
@@ -80,6 +98,7 @@ public class localisationList {
              double x = rt.getValue(xlabel,i);
              double y = rt.getValue(ylabel,i);
              double z;
+             double numFrames = rt.getValue(framenumlabel,i);
 
              if(!zlabel.equals("none")) {
                  z = rt.getValue(zlabel, i);
@@ -88,7 +107,7 @@ public class localisationList {
              }
              int timeFrame = (int) rt.getValue(framelabel,i);
              double precision = rt.getValue(preclabel,i);
-             locList[i] = new localisation(x,y,z, timeFrame, precision);
+             locList[i] = new localisation(x,y,z, timeFrame, precision, (int) numFrames);
 
 
 
@@ -103,7 +122,7 @@ public class localisationList {
 
     }
 
-    public void assignTracks(int timeGap){
+    public void assignTracks(int timeGap, int factor){
 
 
         int[] trackIDList = new int[locList.length];
@@ -111,6 +130,7 @@ public class localisationList {
 
         for(int i=0;i<trackIDList.length-1;i++){
             int counter = 0;
+            int lengthcounter = 0;
             Deque<Integer> stack = new ArrayDeque<>();
 
             if(trackIDList[i]==0){
@@ -133,20 +153,21 @@ public class localisationList {
                     loop = true;
                     int secondFrame = locList[secondID].getTimeFrame();
 
-                    if(secondFrame-firstFrame > timeGap){
+                    if(secondFrame-firstFrame > timeGap+locList[secondID].getNumFrames()){
                         loop = false;
                     }
                     if(secondID>=locList.length-1){
                         loop=false;
                     }
 
-                    if(overlap(locList[firstID],locList[secondID]) && loop && trackIDList[secondID]==0 && firstFrame!=secondFrame){
+                    if(overlap(locList[firstID],locList[secondID], factor) && loop && trackIDList[secondID]==0 && firstFrame!=secondFrame){
                         X_total = X_total+locList[secondID].getX();
                         Y_total = Y_total+locList[secondID].getY();
                         trackIDList[secondID] = i+1;
                         stack.addFirst(secondID);
                         firstID = secondID;
                         firstFrame = secondFrame;
+                        lengthcounter=lengthcounter+locList[secondID].getNumFrames();
                         counter++;
                         trackCount[secondID] = counter;
 
@@ -182,7 +203,7 @@ public class localisationList {
 
                     trackLocIdsList.add(trackLocIds);
                     trackIDs.add(i + 1);
-                    trackLengths.add(counter);
+                    trackLengths.add(lengthcounter);
                     meanX.add((X_total / (double) counter));
                     meanY.add((Y_total / (double) counter));
 
@@ -214,9 +235,9 @@ public class localisationList {
 
     }
 
-    private boolean overlap(localisation a, localisation b){
+    private boolean overlap(localisation a, localisation b, int f){
 
-        double factor = 1.0;
+        double factor = (double) f;
 
         double x1 = a.getX();
         double y1 = a.getY();
