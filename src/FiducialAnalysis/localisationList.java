@@ -69,18 +69,24 @@ public class localisationList {
             return;
         }
 
-        String xlabel = gd.getNextChoice();
+        //String xlabel = gd.getNextChoice();
         int xlabelIndex = gd.getNextChoiceIndex();
-        String ylabel = gd.getNextChoice();
+        String xlabel = headers[xlabelIndex];
+        //String ylabel = gd.getNextChoice();
         int ylabelIndex = gd.getNextChoiceIndex();
-        String zlabel = gd.getNextChoice();
+        String ylabel = headers[ylabelIndex];
+        //String zlabel = gd.getNextChoice();
         int zlabelIndex = gd.getNextChoiceIndex();
-        String framelabel = gd.getNextChoice();
+        String zlabel = headers[zlabelIndex];
+        //String framelabel = gd.getNextChoice();
         int framelabelIndex = gd.getNextChoiceIndex();
-        String preclabel = gd.getNextChoice();
+        String framelabel = headers[framelabelIndex];
+        //String preclabel = gd.getNextChoice();
         int preclabelIndex = gd.getNextChoiceIndex();
-        String framenumlabel = gd.getNextChoice();
+        String preclabel = headers[preclabelIndex];
+        //String framenumlabel = gd.getNextChoice();
         int framenumlabelIndex = gd.getNextChoiceIndex();
+        String framenumlabel = headers[framenumlabelIndex];
 
 
         Prefs.set("LOC.xlab",xlabelIndex);
