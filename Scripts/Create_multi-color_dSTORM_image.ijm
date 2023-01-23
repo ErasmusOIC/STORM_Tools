@@ -39,7 +39,7 @@ file3 = Dialog.getChoice();
 call("ij.Prefs.set","ST.Exp_name", name);
 
 if(!(file1 == "none")){
-	run("Bio-Formats", "open="+dir+file1+" autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
+	run("Bio-Formats", "open=["+dir+file1+"] autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 	rename("Ch1_original");
 	run("Duplicate...", "duplicate channels=1");
 	rename("Ch1_new");
@@ -50,7 +50,7 @@ if(!(file1 == "none")){
 	close("Ch1_original");}
 
 if(!(file2 == "none")){ 
-	run("Bio-Formats", "open="+dir+file2+" autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
+	run("Bio-Formats", "open=["+dir+file2+"] autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 	rename("Ch2_original");
 	run("Duplicate...", "duplicate channels=1");
 	rename("Ch2_new");
@@ -61,7 +61,7 @@ if(!(file2 == "none")){
 	close("Ch2_original");}
 
 if(!(file3 == "none")){
-	run("Bio-Formats", "open="+dir+file3+" autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
+	run("Bio-Formats", "open=["+dir+file3+"] autoscale color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 	rename("Ch3_original");
 	run("Duplicate...", "duplicate channels=1");
 	rename("Ch3_new");
