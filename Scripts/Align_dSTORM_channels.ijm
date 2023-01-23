@@ -51,22 +51,22 @@ if(!(file2 == "none")){
 	transformation_ch2 = name+"_Ch2_transformation.txt";
 	file2_gt = name+"_Ch2_gt.txt";
 	run("Autoselect Fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file2+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
-	run("Calculate Transformation", "select=1 select_0=2 save="+dir+transformation_ch2);
-	run("Results... ", "open="+dir+file2_g);
-	run("Apply Transformation", "open="+dir+transformation_ch2);
-	run("Results... ", "open="+dir+file2_g);
-	run("Apply Transformation", "open="+dir+transformation_ch2);
+	run("Calculate Transformation", "select=1 select_0=2 save=["+dir+transformation_ch2+"]");
+	run("Results... ", "open=["+dir+file2_g+"]");
+	run("Apply Transformation", "open=["+dir+transformation_ch2+"]");
+	run("Results... ", "open=["+dir+file2_g+"]");
+	run("Apply Transformation", "open=["+dir+transformation_ch2+"]");
 	saveAs("Results", dir+file2_gt);}
 
 if(!(file3 == "none")){
 	transformation_ch3 = name+"_Ch3_transformation.txt";
 	file3_gt = name+"_Ch3_gt.txt";
 	run("Autoselect Fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file3+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
-	run("Calculate Transformation", "select=1 select_0=2 save="+dir+transformation_ch3);
-	run("Results... ", "open="+dir+file3_g);
-	run("Apply Transformation", "open="+dir+transformation_ch3);
-	run("Results... ", "open="+dir+file3_g);
-	run("Apply Transformation", "open="+dir+transformation_ch3);
+	run("Calculate Transformation", "select=1 select_0=2 save=["+dir+transformation_ch3+"]");
+	run("Results... ", "open=["+dir+file3_g+"]");
+	run("Apply Transformation", "open=["+dir+transformation_ch3+"]");
+	run("Results... ", "open=["+dir+file3_g+"]");
+	run("Apply Transformation", "open=["+dir+transformation_ch3+"]");
 	saveAs("Results", dir+file3_gt);}
 
 
