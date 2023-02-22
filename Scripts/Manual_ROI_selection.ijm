@@ -2,6 +2,7 @@
 /// Script: "Manual_ROI_selection.ijm"                      ///
 /// Authors: Maarten Paul & Lieke Koornneef                 ///
 /// Affiliation: Erasmus MC, Rotterdam, The Netherlands     ///
+/// Contact: j.slotman@erasmusmc.nl  				   	    ///
 /// License: LGPLv3                                         ///
 /// Date: 13-01-2023                                        ///
 ///////////////////////////////////////////////////////////////

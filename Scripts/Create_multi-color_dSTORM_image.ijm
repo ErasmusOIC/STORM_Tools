@@ -2,8 +2,9 @@
 /// Script: "Create_multi-color_dSTORM_image.ijm"           ///
 /// Authors: Lieke Koornneef & Johan Slotman                ///
 /// Affiliation: Erasmus MC, Rotterdam, The Netherlands     ///
+/// Contact: j.slotman@erasmusmc.nl  						///
 /// License: LGPLv3                                         ///
-/// Date: 13-01-2023                                        ///
+/// Date: 23-01-2023                                        ///
 ///////////////////////////////////////////////////////////////
 
 dir = getDirectory("Select directory");

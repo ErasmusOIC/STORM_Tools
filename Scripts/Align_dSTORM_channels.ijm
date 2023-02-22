@@ -1,9 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 /// Script: "Align_dSTORM_channels.ijm"                                                   ///
 /// Authors: Lieke Koornneef & Johan Slotman                                              ///
-/// Affiliation: Erasmus MC, Rotterdam, The Netherlands                                   ///
+/// Affiliation: Erasmus MC, Rotterdam, The Netherlands      							  ///
+/// Contact: j.slotman@erasmusmc.nl  													  ///
 /// License: LGPLv3                                                                       ///
-/// Date: 13-01-2023                                                                      ///
+/// Date: 20-02-2023                                                                      ///
 ///                                                                                       ///
 /// This code is adapted from the DoM_Utrecht plugin for single-molecule analysis         ///
 /// https://github.com/ekatrukha/DoM_Utrecht/                                             ///
@@ -50,7 +51,7 @@ run("Input/Output...", "jpeg=85 gif=-1 file=.csv use_file save_column");
 if(!(file2 == "none")){
 	transformation_ch2 = name+"_Ch2_transformation.txt";
 	file2_gt = name+"_Ch2_gt.txt";
-	run("Autoselect Fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file2+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
+	run("Autoselect fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file2+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
 	run("Calculate Transformation", "select=1 select_0=2 save=["+dir+transformation_ch2+"]");
 	run("Results... ", "open=["+dir+file2_g+"]");
 	run("Apply Transformation", "open=["+dir+transformation_ch2+"]");
@@ -61,7 +62,7 @@ if(!(file2 == "none")){
 if(!(file3 == "none")){
 	transformation_ch3 = name+"_Ch3_transformation.txt";
 	file3_gt = name+"_Ch3_gt.txt";
-	run("Autoselect Fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file3+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
+	run("Autoselect fiducials", "maximum_gap="+maximum_gap_value+" track_length="+track_length_value+" select_primary=["+dir+file1+"] select_secondary=["+dir+file3+"] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]] select_x=[Position X [nm]] select_y=[Position Y [nm]] select_z=none select_frame=[First Frame] select_precision=[Precision [nm]]");
 	run("Calculate Transformation", "select=1 select_0=2 save=["+dir+transformation_ch3+"]");
 	run("Results... ", "open=["+dir+file3_g+"]");
 	run("Apply Transformation", "open=["+dir+transformation_ch3+"]");

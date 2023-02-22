@@ -2,6 +2,7 @@
 /// Script: "Create_reference.ijm"                          ///
 /// Authors: Lieke Koornneef & Johan Slotman                ///
 /// Affiliation: Erasmus MC, Rotterdam, The Netherlands     ///
+/// Contact: j.slotman@erasmusmc.nl  					    ///
 /// License: LGPLv3                                         ///
 /// Date: 13-01-2023                                        ///
 ///////////////////////////////////////////////////////////////
