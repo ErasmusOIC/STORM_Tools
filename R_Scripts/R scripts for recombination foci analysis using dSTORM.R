@@ -1,3 +1,23 @@
+#############################################################
+### Script: "R Scripts for recombination foci analysis "  ###
+### Authors: Lieke Koornneef & Johan Slotman              ###
+### Affiliation: Erasmus MC, Rotterdam, The Netherlands   ###
+### Contact: j.slotman@erasmusmc.nl  						          ###
+### License: LGPLv3                                       ###
+### Date: 01-02-2023                                      ###
+#############################################################
+
+# Installation SMoLR package ----------------------------------------------
+install.packages("devtools")  
+library(devtools)  
+if (!requireNamespace("BiocManager", quietly = TRUE)){
+  install.packages("BiocManager")
+}
+BiocManager::install("EBImage") 
+install_github("ErasmusOIC/SMoLR", build_vignettes = TRUE)
+library(SMoLR) 
+
+
 # Create dSTORM image per channel ------------------------------------------
 
 #Load packages
