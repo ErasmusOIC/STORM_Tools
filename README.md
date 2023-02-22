@@ -2,7 +2,7 @@
 FIJI Plugin, ImageJ and R scripts for STORM analysis
 
 This package includes all software used in the protocol paper "Multi-color dSTORM Imaging and Analysis of Recombination Foci in Mouse Spread Meiotic Nuclei"
-and a test dataset.
+test data can be found at (URL to be announced)
 
 
 Install STORM_Tools by downloading STORM_Tools.jar and copying it into the plugins folder of your FIJI installation.
